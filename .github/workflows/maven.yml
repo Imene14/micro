@@ -25,7 +25,8 @@ jobs:
     - name: Build and test ${{ matrix.service }}
       working-directory: ${{ matrix.service }}
       run: |
-        ./mvnw clean install
+        mvn clean
+        mvn -B package --file pom.xml
 
       
     - name: Build and push Docker image for ${{ matrix.service }}
