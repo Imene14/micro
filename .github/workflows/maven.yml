@@ -22,15 +22,15 @@ jobs:
         distribution: 'adopt'
         java-version: '17'
 
-    - name: Build and test service1
-      working-directory: service1
+    - name: Build and test service2
+      working-directory: service2
       run: |
         mvn clean
         mvn -B package --file pom.xml
 
       
     - name: Build and push Docker image 
-      working-directory: service1
+      working-directory: service2
       run: |
-        sudo docker build -t imen14/service1:latest .
+        sudo docker build -t imen14/service2:latest .
         
