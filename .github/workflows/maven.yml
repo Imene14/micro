@@ -9,9 +9,9 @@ jobs:
   build-deploy:
     name: Build and Deploy Spring Boot for Beginner
     runs-on: self-hosted
-    strategy:
-      matrix:
-        service: [service1, service2, service-discovery, api_gateway]
+    #strategy:
+     # matrix:
+      #  service: [service1, service2, service-discovery, api_gateway]
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -22,16 +22,49 @@ jobs:
         distribution: 'adopt'
         java-version: '17'
 
-    - name: Build and test ${{ matrix.service }}
-      working-directory: ${{ matrix.service }}
+    - name: Build and test service-discovery
+      working-directory: service-discovery
       run: |
         mvn clean package
         
 
     - name: Build and push Docker image 
-      working-directory: ${{ matrix.service }}
+      working-directory: service-discovery
       run: |
-        sudo docker build -t ${{ matrix.service }}:latest .
+        sudo docker build -t service-discovery:latest .
+
+    - name: Build and test service1
+      working-directory: service1
+      run: |
+        mvn clean package
+        
+
+    - name: Build and push Docker image 
+      working-directory: service1
+      run: |
+        sudo docker build -t service1:latest .
+
+    - name: Build and test service2
+      working-directory: service2
+      run: |
+        mvn clean package
+        
+
+    - name: Build and push Docker image 
+      working-directory: service2
+      run: |
+        sudo docker build -t service2:latest .
+
+    - name: Build and test api-gateway
+      working-directory: api-gateway
+      run: |
+        mvn clean package
+        
+
+    - name: Build and push Docker image 
+      working-directory: api-gateway
+      run: |
+        sudo docker build -t api-gateway:latest .
 
     - name: Deploy with Docker Compose
       working-directory: ./  
