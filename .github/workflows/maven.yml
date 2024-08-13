@@ -22,6 +22,17 @@ jobs:
         distribution: 'adopt'
         java-version: '17'
 
+    - name: Build and test service-discovery
+      working-directory: service-discovery
+      run: |
+        mvn clean
+        mvn -B package --file pom.xml
+
+    - name: Build and push Docker image 
+      working-directory: service-discovery
+      run: |
+        sudo docker build -t service-discovery:latest .
+
     - name: Build and test service1
       working-directory: service1
       run: |
