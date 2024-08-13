@@ -30,7 +30,7 @@ jobs:
 
       
     - name: Build and push Docker image 
-      working-directory: service2
+      working-directory: service-discovery
       run: |
         sudo docker build -t service-discovery:latest .
         
