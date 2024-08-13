@@ -25,8 +25,8 @@ jobs:
     - name: Build and test service-discovery
       working-directory: service-discovery
       run: |
-        mvn clean
-        mvn -B package --file pom.xml
+        mvn clean package
+        
 
     - name: Build and push Docker image 
       working-directory: service-discovery
