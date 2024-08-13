@@ -1,0 +1,47 @@
+name: microservice pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    name: Build and Deploy Spring Boot for Beginner
+    runs-on: self-hosted
+    #strategy:
+     # matrix:
+      #  service: [service1, service2, service-discovery, api_gateway]
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'adopt'
+        java-version: '17'
+
+    - name: Build and test service-discovery
+      working-directory: service-discovery
+      run: |
+        mvn clean package
+        
+
+    - name: Build and push Docker image 
+      working-directory: service-discovery
+      run: |
+        sudo docker build -t service-discovery:latest .
+
+    - name: Build and test service1
+      working-directory: service1
+      run: |
+        mvn clean
+        mvn -B package --file pom.xml
+
+      
+    - name: Build and push Docker image 
+      working-directory: service1
+      run: |
+        sudo docker build -t service1:latest .
+        
