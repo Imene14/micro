@@ -33,11 +33,14 @@ jobs:
       run: |
         sudo docker build -t service-discovery:latest .
 
+    - name: run docker image
+      run:
+        sudo docker run -d -p 8761:8761 service-discovery:latest
+
     - name: Build and test service1
       working-directory: service1
       run: |
         mvn clean package
-        
 
     - name: Build and push Docker image 
       working-directory: service1
